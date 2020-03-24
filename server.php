@@ -58,6 +58,13 @@ $resourcesId= array_key_exists('resource_id', $_GET) ? $_GET['resource_id'] : ''
             }
         break;
         case 'POST':
+            //vamos a leer un archivo por completo y devolver su contenido 
+            $json = file_get_contents('php://input');
+            $books[] = json_decode($json, true);
+            
+            //vamos a mostrar la cantidad total menos 1 por que empieza en cero
+            // echo array_keys($books)[count($books)-1];
+            echo json_encode($books);
         break;
         case 'PUT':
         break;
