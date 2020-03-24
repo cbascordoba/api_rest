@@ -35,14 +35,27 @@ $books= [
 //vamos a indicarle al usuario que le vamos a enviar un json
 
 header('Content-Type: application/json');
+
+//tomo el id del elemento que debe venir en el GET
+//debemos verificar que este resource_id existe (con un IF EN LINEA)
+$resourcesId= array_key_exists('resource_id', $_GET) ? $_GET['resource_id'] : '' ;
+
     
 //Me voy a valer de un metodo para saber que tipo de peticion estoy recibien y paso todo a mayuscula. 
 //generamos la respuesta asumiendo que el pedido es correcto. 
     switch( strtoupper($_SERVER['REQUEST_METHOD'])){
         //vamos con GET a devolver la coleccion de libros
         case 'GET':
-            //lo devolvemos en formato json
-            echo json_encode($books);
+            if( empty( $resourcesId) ){
+                //lo devolvemos en formato json
+                echo json_encode($books);
+            }
+            else{
+                //si el resourceId existe dentro del array books entonces muestre ese item
+                if( array_key_exists( $resourcesId, $books )){
+                    echo json_encode( $books[ $resourcesId ] );
+                }
+            }
         break;
         case 'POST':
         break;
